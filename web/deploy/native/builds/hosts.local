@@ -1,0 +1,25 @@
+[frontend]
+frontendhost ansible_ssh_host=localhost
+
+[frontend:vars]
+mapped_port=80
+test_path=http://0.0.0.0:80/
+app_service_name=r3volfrontend
+
+[all:children]
+frontend
+
+[all:vars]
+mode=http
+
+r3vol_env=r3vol-local
+r3vol_version=master
+r3vol_repo=faical-yannick-congo/r3vol
+anacondadir=anaconda
+debug=True
+env_type=development
+ansible_ssh_private_key_file=
+ansible_connection=local
+ansible_ssh_user=fyc
+r3vol_location=/home/fyc/r3vol-repo
+ssl_location=/home/fyc/r3vol-ssl

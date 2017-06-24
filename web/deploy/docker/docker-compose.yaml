@@ -1,0 +1,42 @@
+version: '2'
+services:
+  corrdb:
+    build:
+        context: ./builds
+        dockerfile: Dockerfile-db
+    ports:
+     - "27017:27017"
+    expose:
+     - "27017"
+    volumes:
+     - /var/lib/mongodb:/data/db
+  corrapi:
+    build:
+        context: ./builds
+        dockerfile: Dockerfile-api
+    ports:
+     - "5100:5100"
+    volumes:
+     - /home/fyc/corr-storage:/home/corradmin/corr-storage
+    depends_on:
+     - "corrdb"
+  corrcloud:
+    build:
+        context: ./builds
+        dockerfile: Dockerfile-cloud
+    ports:
+     - "5200:5200"
+    volumes:
+     - /home/fyc/corr-storage:/home/corradmin/corr-storage
+    expose:
+     - "5200"
+    depends_on:
+     - "corrdb"
+  corrview:
+    build:
+        context: ./builds
+        dockerfile: Dockerfile-frontend
+    ports:
+     - "5000:5000"
+    depends_on:
+     - "corrcloud"

@@ -1,0 +1,23 @@
+- name: install git
+  apt:
+    name: git
+    state: present
+    force: yes
+  become: true
+
+- name: delete r3vol repository
+  file:
+    path: "{{ r3vol_path }}"
+    state: absent
+  become: true
+  tags: [install]
+  when: rev_parse.rc == 0
+
+- name: clone r3vol repository
+  git:
+    repo: https://github.com/{{ r3vol }}.git
+    dest: "{{ r3vol_path }}"
+    version: "{{ r3vol_version }}"
+    clone: yes
+    force: yes
+  tags: [install]

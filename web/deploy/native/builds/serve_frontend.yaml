@@ -1,0 +1,53 @@
+- set_fact:
+    frontend_path: "{{ r3vol_path }}/web/src/frontend"
+
+- name: create r3vol-ssl directory
+  file: path=/r3vol-ssl state=directory
+  when: mode == "https"
+  become: true
+
+- name: copy ssl certificate for nginx
+  template: src={{ ssl_location }}/r3vol.crt dest=/r3vol-ssl/r3vol.crt
+  when: mode == "https"
+  become: true
+
+- name: copy ssl key for nginx
+  template: src={{ ssl_location }}/r3vol.key dest=/r3vol-ssl/r3vol.key
+  when: mode == "https"
+  become: true
+
+- name: allow read an execute permission on ssl.
+  shell: "chmod -R a+rx /r3vol-ssl"
+  when: mode == "https"
+  become: true
+
+- name: copy nginx template
+  template: src={{ inventory_dir }}/nginx-frontend.j2 dest=/etc/nginx/sites-available/{{ app_service_name }}
+  become: true
+
+- name: link files for nginx
+  file: src=/etc/nginx/sites-available/{{ app_service_name }} dest=/etc/nginx/sites-enabled/{{ app_service_name }} state=link
+  become: true
+
+- name: allow read an write permission
+  shell: "chmod -R a+rw {{ frontend_path }}"
+  become: true
+
+- name: restart nginx
+  service: name=nginx state=restarted
+  become: true
+
+- name: enable port in ufw
+  ufw:
+    rule: allow
+    port: "{{ mapped_port }}"
+    proto: tcp
+  become: true
+
+- name: check that frontend is up and running
+  uri: url={{ test_path }} validate_certs=no
+  when: mode == "https"
+
+- name: check that frontend is up and running
+  uri: url={{ test_path }}
+  when: mode == "http"
