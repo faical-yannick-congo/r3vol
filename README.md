@@ -100,9 +100,6 @@ Innovations:
 	Augmented Reality
 
 
-
-
-
 Technologies:
 - AI
 - CryptoCurrency

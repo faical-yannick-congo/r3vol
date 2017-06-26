@@ -11,13 +11,19 @@
     state: absent
   become: true
   tags: [install]
-  when: rev_parse.rc == 0
+  when: rev_parse.rc != 0
+
+- name: start ssh-agent
+  shell: eval `ssh-agent -s`
 
 - name: clone r3vol repository
   git:
-    repo: https://github.com/{{ r3vol }}.git
+    repo: git@github.com:{{ r3vol_repo }}.git
     dest: "{{ r3vol_path }}"
+    key_file: /home/{{ ansible_ssh_user }}/.ssh/github 
     version: "{{ r3vol_version }}"
+    accept_hostkey: true
     clone: yes
     force: yes
   tags: [install]
+  when: rev_parse.rc != 0
