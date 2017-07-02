@@ -685,15 +685,15 @@ thead {
     color: #0288d1 !important;
 }
 .brand-bg {
-    background-color: #03a9f4 !important; /*theme primary background color*/
+    background-color: #f4b302 !important; /*theme primary background color*/
 }
 
 .brand-bg.darken-2 {
-    background-color: #0288d1 !important;
+    background-color: #dda816 !important;
 }
 
 .brand-hover:hover {
-	background-color: #03a9f4 !important; /*theme primary hover color*/
+	background-color: #f4b302 !important; /*theme primary hover color*/
 }
 
 
@@ -2074,7 +2074,7 @@ KEY FRAME
 }
 
 .search-trigger i:hover {
-    color: #03a9f4;
+    color: #f4b302;
 }
 .tt-nav.sticky .search-trigger i.material-icons {
     line-height: 62px;
@@ -2224,7 +2224,7 @@ KEY FRAME
     position: relative;
     cursor: default;
     z-index: 300;
-    background-color: rgba(3, 169, 244, 0.9);
+    background-color: #f4b302;
     -webkit-transform: scale(90);
     -moz-transform: scale(90);
     -ms-transform: scale(90);
@@ -2275,7 +2275,7 @@ KEY FRAME
     margin: 35px 0;
 }
 #preloader .progress .indeterminate{
-    background:#03a9f4;
+    background:#f4b302;
 }
 
 
